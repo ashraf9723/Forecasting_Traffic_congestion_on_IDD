@@ -1,0 +1,80 @@
+{
+  "date": "2026-02-18",
+  "data": {
+    "total_frames": 2993,
+    "test_frames": 449,
+    "nodes": 50,
+    "test_points": 22450,
+    "split": {
+      "train_val_test": "70/15/15",
+      "test_start_index": 2544
+    }
+  },
+  "model": {
+    "checkpoint": "traffic_gnn_model_best_overall.pth",
+    "hidden_dim": 128,
+    "in_dim": 12,
+    "ext_dim": 3
+  },
+  "regression_metrics_all_points": {
+    "mae": 0.5941581726074219,
+    "rmse": 1.1828502674195844,
+    "mse": 1.3991347551345825,
+    "mape_percent": 2.131509304046631,
+    "r2": NaN,
+    "accuracy_abs_err_le_0_5_percent": 74.61024498886414,
+    "accuracy_abs_err_le_1_0_percent": 82.98886414253897
+  },
+  "regression_metrics_frame_mean": {
+    "mae": 0.3527906537055969,
+    "rmse": 0.399284323067926,
+    "mse": 0.1594279706478119,
+    "r2": NaN
+  },
+  "classification_3bin": {
+    "bins": [
+      "Low (<=3)",
+      "Moderate (3-6]",
+      "High (>6)"
+    ],
+    "overall_accuracy_percent": 100.0,
+    "macro_f1": 0.3333333333333333,
+    "confusion_matrix_rows_true_cols_pred": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        22450
+      ]
+    ],
+    "per_class": {
+      "Low (<=3)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "Moderate (3-6]": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "High (>6)": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 22450
+      }
+    }
+  }
+}
