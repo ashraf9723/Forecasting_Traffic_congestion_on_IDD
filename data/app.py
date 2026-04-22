@@ -1752,8 +1752,8 @@ with tab5:
             st.metric("Current Congestion", f"{predicted_flow[-1]:.1f}/10")
             
             # Congestion gauge
-            congestion_pct = (predicted_flow[-1] / 10) * 100
-            st.progress(int(congestion_pct), text=f"Congestion: {congestion_pct:.0f}%")
+            congestion_pct = min((predicted_flow[-1] / 10) * 100, 100)  # Clamp to max 100
+            st.progress(min(int(congestion_pct), 100), text=f"Congestion: {congestion_pct:.0f}%")
             
             # Traffic status
             if predicted_flow[-1] < 4:
@@ -2079,7 +2079,8 @@ with tab6:
                     with col_cong2:
                         st.write(f"**With Emergency Clearance:** {route['emergency_congestion']:.1f}")
                     
-                    st.progress(int((10 - route['emergency_congestion']) * 10), text=f"Route Clearance: {100 - route['emergency_congestion']*10:.0f}%")
+                    clearance = max(0, min(int((10 - route['emergency_congestion']) * 10), 100))  # Clamp 0-100
+                    st.progress(clearance, text=f"Route Clearance: {min(100, max(0, 100 - route['emergency_congestion']*10)):.0f}%")
 
 # ============= TAB 7: POLICY SIMULATION =============
 with tab7:
