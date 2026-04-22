@@ -16,7 +16,3 @@ showErrorDetails = false
 
 [logger]
 level = "info"
-
-[ui]
-hideTopBar = false
-hideMainMenuButton = false
