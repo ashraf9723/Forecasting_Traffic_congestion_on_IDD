@@ -23,10 +23,156 @@ except ImportError:
     st.warning("📦 Folium not installed. Map features will be limited. Install with: pip install folium streamlit-folium")
 
 # Page Configuration
-st.set_page_config(page_title="Traffic Forecast AI", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(
+    page_title="Traffic Forecast AI",
+    page_icon="🚦",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://github.com/ashraf9723/Forecasting_Traffic_congestion_on_IDD',
+        'Report a bug': "https://github.com/ashraf9723/Forecasting_Traffic_congestion_on_IDD/issues",
+        'About': "# Traffic Congestion Forecasting with Knowledge-Guided GNN"
+    }
+)
 
-st.title("🚦 Advanced Traffic Congestion Forecasting with XAI")
-st.markdown("### Knowledge-Guided Spatio-Temporal GNN with Explainability")
+# Custom CSS for better styling
+st.markdown("""
+<style>
+:root {
+    --primary-color: #1f77b4;
+    --secondary-color: #FF6B6B;
+    --accent-color: #4ECDC4;
+    --background-color: #f0f2f6;
+}
+
+/* Main background */
+.stApp {
+    background: linear-gradient(135deg, #f0f2f6 0%, #ffffff 100%);
+}
+
+/* Title styling */
+h1 {
+    background: linear-gradient(120deg, #1f77b4, #4ECDC4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900 !important;
+    font-size: 3.5rem !important;
+    margin-bottom: 0.5rem !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Subtitle styling */
+h2, h3 {
+    color: #1f77b4;
+    font-weight: 700;
+    border-bottom: 3px solid #4ECDC4;
+    padding-bottom: 0.5rem;
+}
+
+/* Metric cards */
+.metric-card {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-left: 5px solid #4ECDC4;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(31, 119, 180, 0.15);
+}
+
+/* Buttons */
+button {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(31, 119, 180, 0.3) !important;
+}
+
+/* Sidebar styling */
+.sidebar .sidebar-content {
+    background: linear-gradient(180deg, #ffffff, #f8f9fa);
+}
+
+/* Expanders */
+.streamlit-expanderHeader {
+    background: linear-gradient(90deg, #ffffff, #f0f2f6) !important;
+    border-radius: 8px !important;
+    border: 2px solid #4ECDC4 !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] button {
+    border-radius: 8px 8px 0 0 !important;
+    background-color: #f0f2f6 !important;
+    border: 2px solid #4ECDC4 !important;
+}
+
+.stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
+    background: linear-gradient(90deg, #1f77b4, #4ECDC4) !important;
+    color: white !important;
+}
+
+/* Code blocks */
+code {
+    background-color: #f0f2f6 !important;
+    color: #1f77b4 !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+}
+
+/* Data frames */
+.dataframe {
+    border: 2px solid #4ECDC4 !important;
+    border-radius: 8px !important;
+}
+
+/* Dividers */
+hr {
+    border-top: 3px solid #4ECDC4 !important;
+    margin: 2rem 0 !important;
+}
+
+/* Status badges */
+.badge {
+    background: linear-gradient(90deg, #1f77b4, #4ECDC4);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+/* Spinner animation */
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Header with logo
+col1, col2, col3 = st.columns([1, 2, 1])
+with col1:
+    st.image("assets/logo.png", width=120)
+with col2:
+    st.title("🚦 Traffic Forecast AI")
+with col3:
+    st.image("assets/network_icon.png", width=120)
+
+st.markdown("""
+<div style='text-align: center; padding: 1rem; background: linear-gradient(90deg, #1f77b4, #4ECDC4); 
+            border-radius: 10px; color: white; margin: 1rem 0;'>
+    <h3>Knowledge-Guided Spatio-Temporal GNN with Explainability</h3>
+    <p>Advanced Traffic Congestion Forecasting for Major Indian Cities</p>
+</div>
+""", unsafe_allow_html=True)
 
 # Indian Public Holidays
 indian_holidays = {
