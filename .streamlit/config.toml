@@ -1,0 +1,10 @@
+[server]
+headless = true
+port = 8080
+enableXsrfProtection = true
+
+[client]
+toolbarMode = "viewer"
+
+[logger]
+level = "info"
