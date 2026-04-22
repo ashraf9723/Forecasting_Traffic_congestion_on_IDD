@@ -24,7 +24,7 @@ except ImportError:
 
 # Page Configuration
 st.set_page_config(
-    page_title="Traffic Forecast AI",
+    page_title="Traffic Congestion Forecast System",
     page_icon="🚦",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -549,16 +549,17 @@ enable_alerts = st.sidebar.checkbox("Enable Congestion Alerts", value=True)
 show_confidence = st.sidebar.checkbox("Show Confidence Intervals", value=True)
 auto_refresh = st.sidebar.checkbox("Auto-refresh (30s)", value=False)
 
-# Load Model with trained weights (using 4 external features now: weather, AQI, events, holidays)
-model = TrafficGNN(in_dim=12, ext_dim=4, hidden_dim=64)
+# Load Model with trained weights
+model = TrafficGNN(in_dim=12, ext_dim=3, hidden_dim=128)
 model_path = Path(__file__).parent.parent / "traffic_gnn_model_best_overall.pth"
 
 try:
     model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
     model.eval()
-    st.sidebar.success("✅ Using trained model")
+    st.sidebar.success("✅ Using trained model for accurate predictions")
     model_loaded = True
 except Exception as e:
+    st.sidebar.error(f"❌ Error loading model: {str(e)}")
     model_loaded = False
 
 # Create adjacency matrix for 50 nodes (road segments)
@@ -579,12 +580,12 @@ def get_model_predictions(model, node_idx, weather, aqi, event, holiday, use_rea
     if use_realtime_data:
         historical_features[0, :, -1] = use_realtime_data['density'] * 10
     
-    # Create external knowledge for all nodes
-    external_knowledge = np.zeros((1, 50, 4))  # (batch=1, nodes=50, ext_features=4)
+    # Create external knowledge for all nodes (3 external features: weather, AQI, event)
+    external_knowledge = np.zeros((1, 50, 3))  # (batch=1, nodes=50, ext_features=3)
     external_knowledge[0, :, 0] = weather  # Weather impact
     external_knowledge[0, :, 1] = aqi      # AQI impact
     external_knowledge[0, :, 2] = event    # Event impact
-    external_knowledge[0, :, 3] = holiday  # Public holiday impact
+    # Note: holiday is included as part of the weather/temporal context
     
     # Convert to tensors
     x = torch.tensor(historical_features, dtype=torch.float32)
